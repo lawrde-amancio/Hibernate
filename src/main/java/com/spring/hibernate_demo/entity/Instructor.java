@@ -39,6 +39,13 @@ public class Instructor {
     public Instructor() {
     }
 
+    /**
+     * Instructor.
+     *
+     * @param firstName firstname.
+     * @param lastName lastname.
+     * @param email email.
+     */
     public Instructor(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -95,10 +102,12 @@ public class Instructor {
     }
 
     //Continuation One to Many
-    @OneToMany(mappedBy = "instructor", fetch=FetchType.LAZY, cascade = {CascadeType.DETACH,
-                                                    CascadeType.MERGE,
-                                                    CascadeType.PERSIST,
-                                                    CascadeType.REFRESH})
+    @OneToMany(mappedBy = "instructor", 
+                        fetch=FetchType.LAZY, 
+                        cascade = {CascadeType.DETACH,
+                                    CascadeType.MERGE,
+                                    CascadeType.PERSIST,
+                                    CascadeType.REFRESH})
     private List<Course> courses;
 
     public List<Course> getCourses() {
@@ -109,6 +118,11 @@ public class Instructor {
         this.courses = courses;
     }
 
+    /**
+     * add.
+     *
+     * @param tcourse add.
+     */
     public void add(Course tcourse) {
         //initializes list if its null
         if(this.courses == null) {
