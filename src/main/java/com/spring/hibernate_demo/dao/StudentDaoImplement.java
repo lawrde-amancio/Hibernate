@@ -8,7 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Repository;
 
 /**
- * StudentDaoImplement.
+ * Data Access Object (DAO) implementation for performing CRUD operations 
+ * on {@link Student} entities using JPA {@link EntityManager}.
  */
 @Repository 
 public class StudentDaoImplement implements StudentDao{
@@ -16,12 +17,20 @@ public class StudentDaoImplement implements StudentDao{
     //define field for entity manager
     private EntityManager em;
 
-    //inject entity manager using constructor injection
+    /**
+     * Constructs a new {@link StudentDaoImplement} with constructor injection.
+     *
+     * @param em the JPA entity manager used to interact with the database context
+     */
     public StudentDaoImplement(EntityManager em) {
         this.em = em;
     }
 
-    //implement save method
+    /**
+     * Persists a new {@link Student} entity into the database context.
+     *
+     * @param theStudent the student entity to save
+     */
     @Override 
     @Transactional
     public void save(Student theStudent) {
@@ -29,12 +38,23 @@ public class StudentDaoImplement implements StudentDao{
         em.persist(theStudent);
     }
     
+    /**
+     * Retrieves a {@link Student} entity by its primary key ID.
+     *
+     * @param id the unique identifier of the student
+     * @return the matching {@link Student} instance, or null if not found
+     */
     @Override 
     public Student findById(Integer id) {
         //find student by id
         return em.find(Student.class, id);
     }
 
+    /**
+     * Retrieves all {@link Student} entities from the database, ordered by last name.
+     *
+     * @return a list containing all stored {@link Student} records
+     */
     @Override
     public List<Student> findAll() {
         //create query
@@ -45,6 +65,12 @@ public class StudentDaoImplement implements StudentDao{
         return query.getResultList();
     }
 
+    /**
+     * Searches for {@link Student} entities by their last name.
+     *
+     * @param lastName the last name to filter students by
+     * @return a list of matching {@link Student} entities
+     */
     @Override 
     public List<Student> findByLastName(String lastName) {
         //create query
@@ -57,6 +83,11 @@ public class StudentDaoImplement implements StudentDao{
         return query.getResultList();
     }
 
+    /**
+     * Merges and updates the state of an existing {@link Student} entity in the database.
+     *
+     * @param theStudent the student entity with updated values
+     */
     @Override 
     @Transactional
     public void update(Student theStudent) {
@@ -64,6 +95,11 @@ public class StudentDaoImplement implements StudentDao{
         em.merge(theStudent);
     }
 
+    /**
+     * Removes a specific {@link Student} record from the database by ID.
+     *
+     * @param id the primary key ID of the student to remove
+     */
     @Override 
     @Transactional 
     public void delete(Integer id) {
@@ -74,6 +110,11 @@ public class StudentDaoImplement implements StudentDao{
         em.remove(student);
     }
 
+    /**
+     * Deletes all {@link Student} records from the database in a single query.
+     *
+     * @return the number of student rows deleted from the database
+     */
     @Override 
     @Transactional 
     public int deleteAll() {
